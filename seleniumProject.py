@@ -1,23 +1,23 @@
-from  selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 
 
-def main():
-    wd = webdriver.Chrome(executable_path=r'C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe')
-    url = "https://portal-cn.fpmarkets.com/sessions/signin"
-    username = "hong344763175@outlook.com"
-    password = "guan123456"
-    wd.get(url)
-    # print(wd.page_source)
-    WebDriverWait(wd, timeout=30)
-    wd.find_element(By.XPATH,'//input[@name="username"]').send_keys(username)
-    wd.find_element(By.XPATH,'//input[@name="password"]').send_keys(password)
-    wd.find_elements(By.XPATH,'//botton[@color="primary"]').click()
+service = Service(executable_path=ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service)
+url = "https://portal-cn.fpmarkets.com/sessions/signin"
+username = "hong344763175@outlook.com"
+password = "guan123456"
+driver.get(url)
 
-    wd.close()
-    wd.quit()
+#wait
+driver.find_element(By.XPATH,'//input[@name="username"]').send_keys(username)
+driver.find_element(By.XPATH,'//input[@name="password"]').send_keys(password)
+driver.find_element(By.XPATH,'//button[@color="primary"]').click()
 
-if __name__ == '__main__':
-    main()
+#wait
+driver.find_element(By.XPATH,'//span[text()="Reporting"]').click()
+
+# driver.close()
+# driver.quit()
